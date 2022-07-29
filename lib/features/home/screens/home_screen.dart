@@ -17,7 +17,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return SafeArea(
         child: Scaffold(
-      appBar: AppBar(),
       body: Center(
         child: Text(user.toJson()),
       ),

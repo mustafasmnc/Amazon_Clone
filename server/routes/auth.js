@@ -55,7 +55,7 @@ authRouter.post('/api/signin', async (req, res) => {
 
 })
 
-// sign in route
+// check token is valid
 authRouter.post('/TokenIsValid', async (req, res) => {
     try {
         const token = req.header('x-auth-token')
