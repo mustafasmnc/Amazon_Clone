@@ -20,6 +20,7 @@ class _AccountScreenState extends State<AccountScreen> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50),
         child: AppBar(
+          backgroundColor: Color.fromARGB(255, 125, 221, 216),
           elevation: 0,
           flexibleSpace: Container(
             decoration: BoxDecoration(gradient: GlobalVariables.appBarGradient),
