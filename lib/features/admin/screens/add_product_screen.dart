@@ -37,6 +37,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
   void selectImages() async {
     var result = await pickImages();
     setState(() {
+      //images=result;
+      //images.addAll; we can add image after selected some image
       images.addAll(result);
     });
   }
@@ -116,6 +118,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   )),
             ),
             Container(
+              padding: EdgeInsets.only(top: 10),
               decoration:
                   BoxDecoration(borderRadius: BorderRadius.circular(10)),
               child: images.isNotEmpty
@@ -128,9 +131,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           crossAxisCount: 3),
                       itemCount: images.length,
                       itemBuilder: (contex, index) {
+                        //stack for image and remove icon
                         return Stack(children: [
                           Align(
                             alignment: Alignment.center,
+                            //inkwell for see big images
                             child: InkWell(
                               onTap: (() => showDialog(
                                   context: context,
@@ -159,6 +164,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                   )),
                             ),
                           ),
+                          //remove image icon
                           Align(
                             alignment: Alignment.topRight,
                             child: GestureDetector(
