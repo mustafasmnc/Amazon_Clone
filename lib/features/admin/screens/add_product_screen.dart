@@ -4,6 +4,7 @@ import 'package:amazon_clone/common/widgets/custom_button.dart';
 import 'package:amazon_clone/common/widgets/custom_textfield.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:amazon_clone/constants/utils.dart';
+import 'package:amazon_clone/features/admin/services/admin_services.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +23,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController _productPriceController = TextEditingController();
   final TextEditingController _productQuantityController =
       TextEditingController();
+  final AdminServices adminServices = AdminServices();
 
   String? _category = '';
   List<File> images = [];
+  final _addProductFormKey = GlobalKey<FormState>();
 
   List<String> productCategories = [
     'Mobiles',
@@ -33,6 +36,20 @@ class _AddProductScreenState extends State<AddProductScreen> {
     'Books',
     'Fashion',
   ];
+
+  void sellProduct() {
+    if (_addProductFormKey.currentState!.validate() && images.isNotEmpty) {
+      adminServices.sellProduct(
+        context: context,
+        name: _productNameController.text,
+        description: _productDescController.text,
+        price: double.parse(_productPriceController.text),
+        quantity: double.parse(_productQuantityController.text),
+        category: _category!,
+        images: images,
+      );
+    }
+  }
 
   void selectImages() async {
     var result = await pickImages();
@@ -81,161 +98,173 @@ class _AddProductScreenState extends State<AddProductScreen> {
       ),
       body: SingleChildScrollView(
           child: Form(
+              key: _addProductFormKey,
               child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        child: Column(
-          children: [
-            GestureDetector(
-              onTap: selectImages,
-              child: DottedBorder(
-                  borderType: BorderType.RRect,
-                  radius: Radius.circular(10),
-                  dashPattern: [10, 5],
-                  strokeCap: StrokeCap.round,
-                  child: Container(
-                    width: double.infinity,
-                    height: 150,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: selectImages,
+                      child: DottedBorder(
+                          borderType: BorderType.RRect,
+                          radius: Radius.circular(10),
+                          dashPattern: [10, 5],
+                          strokeCap: StrokeCap.round,
+                          child: Container(
+                            width: double.infinity,
+                            height: 150,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.folder_open_outlined,
+                                  size: 40,
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  'Select Product Images',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.grey.shade400,
+                                  ),
+                                )
+                              ],
+                            ),
+                          )),
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.folder_open_outlined,
-                          size: 40,
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          'Select Product Images',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey.shade400,
-                          ),
-                        )
-                      ],
-                    ),
-                  )),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 10),
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(10)),
-              child: images.isNotEmpty
-                  ? GridView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisSpacing: 0,
-                          mainAxisSpacing: 0,
-                          crossAxisCount: 3),
-                      itemCount: images.length,
-                      itemBuilder: (contex, index) {
-                        //stack for image and remove icon
-                        return Stack(children: [
-                          Align(
-                            alignment: Alignment.center,
-                            //inkwell for see big images
-                            child: InkWell(
-                              onTap: (() => showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      AlertDialog(
-                                        backgroundColor: Colors.transparent,
-                                        insetPadding: EdgeInsets.all(10),
-                                        title: Container(
-                                          decoration: BoxDecoration(),
-                                          width:
-                                              MediaQuery.of(context).size.width,
+                    Container(
+                      padding: EdgeInsets.only(top: 10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: images.isNotEmpty
+                          ? GridView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisSpacing: 0,
+                                      mainAxisSpacing: 0,
+                                      crossAxisCount: 3),
+                              itemCount: images.length,
+                              itemBuilder: (contex, index) {
+                                //stack for image and remove icon
+                                return Stack(children: [
+                                  Align(
+                                    alignment: Alignment.center,
+                                    //inkwell for see big images
+                                    child: InkWell(
+                                      onTap: (() => showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              AlertDialog(
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                insetPadding:
+                                                    EdgeInsets.all(10),
+                                                title: Container(
+                                                  decoration: BoxDecoration(),
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  child: Image.file(
+                                                    images[index],
+                                                    fit: BoxFit.fitWidth,
+                                                  ),
+                                                ),
+                                              ))),
+                                      child: Container(
+                                          padding: EdgeInsets.all(10),
+                                          height: 150,
                                           child: Image.file(
                                             images[index],
-                                            fit: BoxFit.fitWidth,
-                                          ),
-                                        ),
-                                      ))),
-                              child: Container(
-                                  padding: EdgeInsets.all(10),
-                                  height: 150,
-                                  child: Image.file(
-                                    images[index],
-                                    height: 150,
-                                    width: 150,
-                                    fit: BoxFit.cover,
-                                  )),
-                            ),
-                          ),
-                          //remove image icon
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: GestureDetector(
-                                onTap: (() => removeSelectedImage(index)),
-                                child: Icon(
-                                  Icons.cancel_outlined,
-                                  size: 24,
-                                )),
-                          )
-                        ]);
-                      })
-                  // CarouselSlider(
-                  //     items: images.map((i) {
-                  //       return Builder(
-                  //           builder: (BuildContext context) => Image.file(
-                  //                 i,
-                  //                 fit: BoxFit.cover,
-                  //                 height: 200,
-                  //               ));
-                  //     }).toList(),
-                  //     options: CarouselOptions(
-                  //       viewportFraction: 0.6,
-                  //       height: 200,
-                  //       autoPlay: true,
-                  //     ),
-                  //   )
-                  : null,
-            ),
-            SizedBox(height: 30),
-            CustomTextField(
-                controller: _productNameController, hintText: 'Product name'),
-            SizedBox(height: 10),
-            CustomTextField(
-              controller: _productDescController,
-              hintText: 'Description',
-              maxLines: 5,
-            ),
-            SizedBox(height: 10),
-            CustomTextField(
-              controller: _productPriceController,
-              hintText: 'Price',
-              keyboardType: TextInputType.number,
-            ),
-            SizedBox(height: 10),
-            CustomTextField(
-              controller: _productQuantityController,
-              hintText: 'Quantity',
-              keyboardType: TextInputType.number,
-            ),
-            SizedBox(height: 10),
-            SizedBox(
-              width: double.infinity,
-              child: DropdownButton(
-                  isExpanded: true,
-                  hint: Text('Select Category'),
-                  icon: Icon(Icons.arrow_drop_down_rounded),
-                  items: productCategories.map((String item) {
-                    return DropdownMenuItem(value: item, child: Text(item));
-                  }).toList(),
-                  value: _category == '' ? null : _category,
-                  onChanged: (String? newVal) {
-                    setState(() {
-                      _category = newVal!;
-                    });
-                  }),
-            ),
-            SizedBox(height: 30),
-            CustomButton(text: 'Sell', onTap: () {})
-          ],
-        ),
-      ))),
+                                            height: 150,
+                                            width: 150,
+                                            fit: BoxFit.cover,
+                                          )),
+                                    ),
+                                  ),
+                                  //remove image icon
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: GestureDetector(
+                                        onTap: (() =>
+                                            removeSelectedImage(index)),
+                                        child: Icon(
+                                          Icons.cancel_outlined,
+                                          size: 24,
+                                        )),
+                                  )
+                                ]);
+                              })
+                          // CarouselSlider(
+                          //     items: images.map((i) {
+                          //       return Builder(
+                          //           builder: (BuildContext context) => Image.file(
+                          //                 i,
+                          //                 fit: BoxFit.cover,
+                          //                 height: 200,
+                          //               ));
+                          //     }).toList(),
+                          //     options: CarouselOptions(
+                          //       viewportFraction: 0.6,
+                          //       height: 200,
+                          //       autoPlay: true,
+                          //     ),
+                          //   )
+                          : null,
+                    ),
+                    SizedBox(height: 30),
+                    CustomTextField(
+                        controller: _productNameController,
+                        hintText: 'Product name'),
+                    SizedBox(height: 10),
+                    CustomTextField(
+                      controller: _productDescController,
+                      hintText: 'Description',
+                      maxLines: 5,
+                    ),
+                    SizedBox(height: 10),
+                    CustomTextField(
+                      controller: _productPriceController,
+                      hintText: 'Price',
+                      keyboardType: TextInputType.number,
+                    ),
+                    SizedBox(height: 10),
+                    CustomTextField(
+                      controller: _productQuantityController,
+                      hintText: 'Quantity',
+                      keyboardType: TextInputType.number,
+                    ),
+                    SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      child: DropdownButton(
+                          isExpanded: true,
+                          hint: Text('Select Category'),
+                          icon: Icon(Icons.arrow_drop_down_rounded),
+                          items: productCategories.map((String item) {
+                            return DropdownMenuItem(
+                                value: item, child: Text(item));
+                          }).toList(),
+                          value: _category == '' ? null : _category,
+                          onChanged: (String? newVal) {
+                            setState(() {
+                              _category = newVal!;
+                            });
+                          }),
+                    ),
+                    SizedBox(height: 30),
+                    CustomButton(
+                      text: 'Sell',
+                      onTap: sellProduct,
+                    )
+                  ],
+                ),
+              ))),
     );
   }
 }

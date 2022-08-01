@@ -6,6 +6,7 @@ require('dotenv').config()
 
 // import from other files
 const authRouter = require('./routes/auth')
+const adminRouter = require('./routes/admin')
 
 // init
 const PORT = process.env.PORT || 3000
@@ -14,6 +15,7 @@ const app = express()
 // middleware
 app.use(express.json())
 app.use(authRouter)
+app.use(adminRouter)
 
 // mongodb connections
 const DB = process.env.MONGO_DB; //Mongodb link
