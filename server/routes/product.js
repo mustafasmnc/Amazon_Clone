@@ -15,7 +15,7 @@ productRouter.get('/api/products', auth, async (req, res) => {
     }
 })
 
-//get all products
+//create a get request to search products and get them
 productRouter.get('/api/products/search/:name', auth, async (req, res) => {
     try {
         //get all products by search query
@@ -28,6 +28,33 @@ productRouter.get('/api/products/search/:name', auth, async (req, res) => {
         })
         res.json(products)
 
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+})
+
+//rate the product
+productRouter.post('/api/rate-product', auth, async (req, res) => {
+    try {
+        const { id, rating } = req.body
+        let product = await Product.findById(id)
+
+        // if user rate the product before, delete old rate (splice fonk for deleting)
+        for (let i = 0; i < product.ratings.length; i++) {
+            if (product.ratings[i].userId == req.user) {
+                product.ratings.splice(i, 1)
+                break
+            }
+        }
+
+        const ratingSchema = {
+            userId: req.user,
+            rating,
+        }
+
+        product.ratings.push(ratingSchema)
+        product = await product.save()
+        res.json(product)
     } catch (error) {
         res.status(500).json({ error: error.message })
     }
