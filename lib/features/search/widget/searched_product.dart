@@ -1,5 +1,6 @@
 import 'package:amazon_clone/common/widgets/stars.dart';
 import 'package:amazon_clone/models/product.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class SearchedProduct extends StatelessWidget {
@@ -22,12 +23,31 @@ class SearchedProduct extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             children: [
-              Image.network(
-                product.images[0],
+              SizedBox(
                 height: 130,
                 width: 130,
-                fit: BoxFit.cover,
+                child: CarouselSlider(
+                  items: product.images.map((i) {
+                    return Builder(
+                        builder: (BuildContext context) => Image.network(
+                              i,
+                              fit: BoxFit.cover,
+                              height: 130,
+                            ));
+                  }).toList(),
+                  options: CarouselOptions(
+                    viewportFraction: 1,
+                    height: 130,
+                    autoPlay: true,
+                  ),
+                ),
               ),
+              // Image.network(
+              //   product.images[0],
+              //   height: 130,
+              //   width: 130,
+              //   fit: BoxFit.contain,
+              // ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

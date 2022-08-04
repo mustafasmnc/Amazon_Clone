@@ -3,6 +3,7 @@ import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:amazon_clone/features/home/services/home_services.dart';
 import 'package:amazon_clone/features/product_details/screens/product_details_screen.dart';
 import 'package:amazon_clone/models/product.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class CategoryDealsScreen extends StatefulWidget {
@@ -94,9 +95,25 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
                                   )),
                                   child: Padding(
                                     padding: EdgeInsets.all(10),
-                                    child: Image.network(
-                                      product.images[0],
+                                    child: CarouselSlider(
+                                      items: product.images.map((i) {
+                                        return Builder(
+                                            builder: (BuildContext context) =>
+                                                Image.network(
+                                                  i,
+                                                  fit: BoxFit.cover,
+                                                  height: 200,
+                                                ));
+                                      }).toList(),
+                                      options: CarouselOptions(
+                                        viewportFraction: 1,
+                                        height: 200,
+                                        autoPlay: true,
+                                      ),
                                     ),
+                                    // child: Image.network(
+                                    //   product.images[0],
+                                    // ),
                                   ),
                                 ),
                               ),

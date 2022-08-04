@@ -131,6 +131,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 SizedBox(height: 10),
                 Expanded(
                   child: ListView.builder(
+                    shrinkWrap: true,
                     itemCount: products!.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
