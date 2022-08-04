@@ -20,7 +20,8 @@ class SearchedProduct extends StatelessWidget {
                 width: 130,
                 fit: BoxFit.cover,
               ),
-              Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
                     width: 230,
@@ -38,7 +39,7 @@ class SearchedProduct extends StatelessWidget {
                   ),
                   Container(
                     width: 230,
-                    padding: EdgeInsets.only(left: 10, top: 5,bottom: 5),
+                    padding: EdgeInsets.only(left: 10, top: 5, bottom: 5),
                     child: Text(
                       '\$${product.price}',
                       maxLines: 2,
