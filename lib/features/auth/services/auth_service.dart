@@ -29,6 +29,7 @@ class AuthService {
         type: '',
         address: '',
         token: '',
+        cart: [],
       );
 
       http.Response response = await http.post(

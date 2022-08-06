@@ -54,6 +54,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     );
   }
 
+  void addToCart() {
+    productDetailsServices.addToCart(
+      context: context,
+      product: widget.product,
+    );
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -233,9 +240,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 CustomButton(text: 'Buy Now', onTap: () {}),
                 SizedBox(height: 20),
                 CustomButton(
-                    text: 'Add to Cart',
-                    color: Color.fromRGBO(254, 216, 19, 1),
-                    onTap: () {}),
+                  text: 'Add to Cart',
+                  color: Color.fromRGBO(254, 216, 19, 1),
+                  onTap: addToCart,
+                ),
               ],
             ),
           ),
