@@ -60,7 +60,7 @@ class _DealOfDayState extends State<DealOfDay> {
                       alignment: Alignment.topLeft,
                       padding: EdgeInsets.only(left: 10, top: 10),
                       child: Text(
-                        '\$123.50',
+                        '\$${product!.price}',
                         style: TextStyle(fontSize: 18),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -75,7 +75,7 @@ class _DealOfDayState extends State<DealOfDay> {
                         bottom: 5,
                       ),
                       child: Text(
-                        'Headphone',
+                        product!.category,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
