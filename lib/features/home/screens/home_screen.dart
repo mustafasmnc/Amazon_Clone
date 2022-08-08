@@ -1,4 +1,5 @@
 import 'package:amazon_clone/constants/global_variables.dart';
+import 'package:amazon_clone/features/cart/services/cart_services.dart';
 import 'package:amazon_clone/features/home/widgets/address_box.dart';
 import 'package:amazon_clone/features/home/widgets/carousel_image.dart';
 import 'package:amazon_clone/features/home/widgets/deal_of_day.dart';
@@ -15,7 +16,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  TextEditingController _searchQuery = TextEditingController();
+  final TextEditingController _searchQuery = TextEditingController();
+  final CartServices cartServices = CartServices();
 
   void navigateToSearchScreen(String query) {
     Navigator.pushNamed(
@@ -23,6 +25,12 @@ class _HomeScreenState extends State<HomeScreen> {
       SearchScreen.routeName,
       arguments: query,
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    cartServices.checkProductInCart(context: context);
   }
 
   @override

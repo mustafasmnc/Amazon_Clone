@@ -16,7 +16,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  TextEditingController _searchQuery = TextEditingController();
+  final TextEditingController _searchQuery = TextEditingController();
 
   void navigateToSearchScreen(String query) {
     Navigator.pushNamed(
@@ -109,32 +109,35 @@ class _CartScreenState extends State<CartScreen> {
         ),
       ),
       body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: Column(
-        children: [
-          AddressBox(),
-          CartSubtotal(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CustomButton(
-              text: 'Proceed to Buy (${user.cart.length} items)',
-              color: Colors.yellow[600],
-              onTap: () {},
-            ),
-          ),
-          SizedBox(height: 15),
-          Container(
-            color: Colors.black12.withOpacity(0.08),
-            height: 1,
-          ),
-          SizedBox(height: 5),
-          ListView.builder(
-              shrinkWrap: true,
-              itemCount: user.cart.length,
-              itemBuilder: (context, index) {
-                return CartProduct(index: index);
-              })
-        ],
-      )),
+            children: [
+              AddressBox(),
+              CartSubtotal(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CustomButton(
+                  text: 'Proceed to Buy (${user.cart.length} items)',
+                  color: Colors.yellow[600],
+                  onTap: () {},
+                ),
+              ),
+              SizedBox(height: 15),
+              Container(
+                color: Colors.black12.withOpacity(0.08),
+                height: 1,
+              ),
+              SizedBox(height: 5),
+              ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: user.cart.length,
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, index) {
+                    return CartProduct(index: index);
+                  })
+            ],
+          )),
     );
   }
 }

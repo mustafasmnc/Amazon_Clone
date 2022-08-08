@@ -31,7 +31,62 @@ userRouter.post('/api/add-to-cart', auth, async (req, res) => {
         user = await user.save()
         res.json(user)
     } catch (error) {
-        res.status(500).json({ error: e.message })
+        res.status(500).json({ error: error.message })
+    }
+})
+
+//remove product from cart
+userRouter.delete('/api/remove-from-cart/:id', auth, async (req, res) => {
+    try {
+        const { id } = req.params
+        const product = await Product.findById(id)
+        let user = await User.findById(req.user)
+
+
+        for (let i = 0; i < user.cart.length; i++) {
+            if (user.cart[i].product._id.equals(product._id)) {
+                if (user.cart[i].quantity == 1) {
+                    user.cart.splice(i, 1)
+                } else {
+                    user.cart[i].quantity -= 1
+                }
+            }
+        }
+
+
+        user = await user.save()
+        res.json(user)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+})
+
+
+//remove product from cart if product deleted or product quantity == 0
+userRouter.delete('/api/check-cart-product', auth, async (req, res) => {
+    try {
+        let user = await User.findById(req.user)
+        if (user.cart.length == 0) {
+            //res.json({ msg: 'No product found in cart' })
+        } else {
+            for (let i = 0; i < user.cart.length; i++) {
+                let productId = user.cart[i].product._id
+                let product = await Product.findById(productId)
+                if (product == null) {
+                    user.cart.splice(i, 1)
+                }
+                if (product != null) {
+                    if (product.quantity == 0) {
+                        user.cart.splice(i, 1)
+                    }
+                }
+            }
+            await user.save()
+            res.json(user)
+        }
+
+    } catch (error) {
+        res.status(500).json({ error: error.message })
     }
 })
 

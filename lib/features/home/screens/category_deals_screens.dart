@@ -108,7 +108,7 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
                                       options: CarouselOptions(
                                         viewportFraction: 1,
                                         height: 200,
-                                        autoPlay: true,
+                                        autoPlay: false,
                                       ),
                                     ),
                                     // child: Image.network(
