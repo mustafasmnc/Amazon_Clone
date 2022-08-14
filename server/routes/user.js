@@ -2,6 +2,7 @@ const express = require('express')
 const userRouter = express.Router()
 const auth = require('../middlewares/auth')
 const { Product } = require('../models/product')
+const Order = require("../models/order");
 const User = require('../models/user')
 
 //add product
@@ -129,13 +130,14 @@ userRouter.post('/api/order', auth, async (req, res) => {
             totalPrice,
             address,
             userId: req.user,
-            orderAt: new Date().getTime,
+            orderedAt: new Date().getTime(),
         })
         order = await order.save()
 
         res.json(order)
     } catch (error) {
         res.status(500).json({ error: error.message })
+        console.log(error)
     }
 })
 

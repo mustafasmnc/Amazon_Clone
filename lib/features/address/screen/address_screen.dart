@@ -100,7 +100,11 @@ class _AddressScreenState extends State<AddressScreen> {
     } else {
       showSnackbar(context, 'Error!');
     }
-
+    //  addressServices.placeOrder(
+    //     context: context,
+    //     address: addressToBeUsed,
+    //     totalSum: double.parse(widget.totalAmount),
+    //   );
     print(addressToBeUsed);
   }
 
