@@ -32,7 +32,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 });
               },
               icon: Icon(
-                  widget.hintText == 'Password' ? Icons.lock_outline : null)),
+                  widget.hintText == 'Password' ? Icons.remove_red_eye : null)),
           //hintText: hintText,
           labelText: widget.hintText,
           border: OutlineInputBorder(
