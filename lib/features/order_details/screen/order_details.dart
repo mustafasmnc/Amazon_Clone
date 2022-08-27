@@ -1,8 +1,12 @@
+import 'package:amazon_clone/common/widgets/custom_button.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
+import 'package:amazon_clone/features/admin/services/admin_services.dart';
 import 'package:amazon_clone/features/search/screens/search_screen.dart';
 import 'package:amazon_clone/models/order.dart';
+import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
   static const String routeName = '/order-details';
@@ -15,6 +19,7 @@ class OrderDetailsScreen extends StatefulWidget {
 
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   int currentStep = 0;
+  final AdminServices _adminServices = AdminServices();
   final TextEditingController _searchQuery = TextEditingController();
 
   void navigateToSearchScreen(String query) {
@@ -23,6 +28,19 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       SearchScreen.routeName,
       arguments: query,
     );
+  }
+
+  // !!! ONLY FOR ADMIN !!!
+  void changeOrderStatus(int status) {
+    AdminServices().changeOrderStatus(
+      context: context,
+      status: status + 1,
+      order: widget.order,
+      onSuccess: () {},
+    );
+    setState(() {
+      currentStep += 1;
+    });
   }
 
   @override
@@ -39,6 +57,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60),
@@ -230,13 +249,21 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 child: Stepper(
                   currentStep: currentStep,
                   controlsBuilder: (context, details) {
+                    if (user.type == 'admin') {
+                      return CustomButton(
+                        text: 'Done',
+                        onTap: () => changeOrderStatus(details.currentStep),
+                      );
+                    }
                     return const SizedBox();
                   },
                   physics: ClampingScrollPhysics(),
                   steps: [
                     Step(
                       title: const Text('Pending'),
-                      content: const Text('Your order is yet to be delivered'),
+                      content: user.type == 'admin'
+                          ? const Text('Order is yet to be delivered')
+                          : const Text('Your order is yet to be delivered'),
                       isActive: currentStep > 0,
                       state: currentStep > 0
                           ? StepState.complete
@@ -244,8 +271,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     ),
                     Step(
                       title: const Text('Completed'),
-                      content: const Text(
-                          'Your order has been delivered, you are yet to sign'),
+                      content: user.type == 'admin'
+                          ? const Text(
+                              'Order has been delivered, customer not sign it yet')
+                          : const Text(
+                              'Your order has been delivered, you are yet to sign'),
                       isActive: currentStep > 1,
                       state: currentStep > 1
                           ? StepState.complete
@@ -253,8 +283,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     ),
                     Step(
                       title: const Text('Received'),
-                      content: const Text(
-                          'Your order has been delivered and sign by you'),
+                      content: user.type == 'admin'
+                          ? const Text(
+                              'Order has been delivered and sign by customer')
+                          : const Text(
+                              'Your order has been delivered and sign by you'),
                       isActive: currentStep > 2,
                       state: currentStep > 2
                           ? StepState.complete
@@ -262,8 +295,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     ),
                     Step(
                       title: const Text('Delivered'),
-                      content: const Text(
-                          'Your order has been delivered and sign by you'),
+                      content: user.type == 'admin'
+                          ? const Text(
+                              'Order has been delivered and sign by customer')
+                          : const Text(
+                              'Your order has been delivered and sign by you'),
                       isActive: currentStep >= 3,
                       state: currentStep >= 3
                           ? StepState.complete
