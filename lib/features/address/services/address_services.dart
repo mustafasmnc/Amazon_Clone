@@ -41,7 +41,7 @@ class AddressServices {
           });
     } catch (e) {
       showSnackbar(context, e.toString());
-      print(e.toString());
+      //print(e.toString());
     }
   }
 
@@ -79,7 +79,7 @@ class AddressServices {
           });
     } catch (e) {
       showSnackbar(context, e.toString());
-      print(e.toString());
+      //print(e.toString());
     }
   }
 }

@@ -41,7 +41,7 @@ class HomeServices {
       );
     } catch (e) {
       showSnackbar(context, e.toString());
-      print(e.toString());
+      //print(e.toString());
     }
 
     return productList;
@@ -78,7 +78,7 @@ class HomeServices {
       );
     } catch (e) {
       showSnackbar(context, e.toString());
-      print(e.toString());
+      //print(e.toString());
     }
 
     return product;

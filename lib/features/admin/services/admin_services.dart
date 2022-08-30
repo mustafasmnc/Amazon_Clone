@@ -19,12 +19,12 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AdminServices {
   String getRandomString(int length) {
-    const _chars =
+    const chars =
         'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-    Random _rnd = Random();
+    Random rnd = Random();
 
     return String.fromCharCodes(Iterable.generate(
-        length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+        length, (_) => chars.codeUnitAt(rnd.nextInt(chars.length))));
   }
 
   //add product
@@ -100,7 +100,7 @@ class AdminServices {
           });
     } catch (e) {
       showSnackbar(context, e.toString());
-      print(e.toString());
+      //print(e.toString());
     }
   }
 
@@ -132,7 +132,7 @@ class AdminServices {
       );
     } catch (e) {
       showSnackbar(context, e.toString());
-      print(e.toString());
+      //print(e.toString());
     }
 
     return productList;
@@ -188,7 +188,7 @@ class AdminServices {
           });
     } catch (e) {
       showSnackbar(context, e.toString());
-      print(e.toString());
+      //print(e.toString());
     }
   }
 
@@ -220,7 +220,7 @@ class AdminServices {
       );
     } catch (e) {
       showSnackbar(context, e.toString());
-      print(e.toString());
+      //print(e.toString());
     }
 
     return orderList;
@@ -255,7 +255,7 @@ class AdminServices {
       );
     } catch (e) {
       showSnackbar(context, e.toString());
-      print(e.toString());
+      //print(e.toString());
     }
   }
 
@@ -290,7 +290,7 @@ class AdminServices {
       );
     } catch (e) {
       showSnackbar(context, e.toString());
-      print(e.toString());
+      //print(e.toString());
     }
 
     return {

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -14,15 +12,15 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onTap,
+      style: ElevatedButton.styleFrom(
+        minimumSize: Size(double.infinity, 50),
+        primary: color,
+      ),
       child: Text(
         text,
         style: TextStyle(
           color: color == null ? Colors.white : Colors.black,
         ),
-      ),
-      style: ElevatedButton.styleFrom(
-        minimumSize: Size(double.infinity, 50),
-        primary: color,
       ),
     );
   }

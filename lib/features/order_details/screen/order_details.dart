@@ -19,7 +19,6 @@ class OrderDetailsScreen extends StatefulWidget {
 
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   int currentStep = 0;
-  final AdminServices _adminServices = AdminServices();
   final TextEditingController _searchQuery = TextEditingController();
 
   void navigateToSearchScreen(String query) {

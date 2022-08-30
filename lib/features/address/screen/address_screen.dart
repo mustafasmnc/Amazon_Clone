@@ -1,7 +1,5 @@
-import 'dart:async';
 import 'dart:io' show Platform;
 
-import 'package:amazon_clone/common/widgets/custom_button.dart';
 import 'package:amazon_clone/common/widgets/custom_textfield.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:amazon_clone/constants/utils.dart';
@@ -105,7 +103,7 @@ class _AddressScreenState extends State<AddressScreen> {
     //     address: addressToBeUsed,
     //     totalSum: double.parse(widget.totalAmount),
     //   );
-    print(addressToBeUsed);
+    //print(addressToBeUsed);
   }
 
   @override

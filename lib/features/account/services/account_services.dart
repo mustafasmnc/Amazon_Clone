@@ -42,7 +42,7 @@ class AccountServices {
       );
     } catch (e) {
       showSnackbar(context, e.toString());
-      print(e.toString());
+      //print(e.toString());
     }
 
     return orderList;
