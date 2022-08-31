@@ -26,7 +26,7 @@ Full Stack Amazon Clone along with Admin Panel
 
 
 ## Running Locally
-After cloning this repository, migrate to ```flutter-amazon-clone-tutorial``` folder. Then, follow the following steps:
+After cloning this repository, migrate to ```amazon_clone``` folder. Then, follow the following steps:
 - Create MongoDB Project & Cluster
 - Click on Connect, follow the process where you will get the uri.- Replace the MongoDB uri with yours in ```server/.env``` file with MONGO_DB variable name.
 - Head to ```.env``` file, replace <yourip> with your IP Address with SEVERURI variable name. 
@@ -56,8 +56,8 @@ Then run the following commands to run your app:
 
 **Client**: Flutter, Provider
     
-## SreenShots
-# User
+# ScreenShots
+## User
 <img src="https://github.com/mustafasmnc/Amazon_Clone/blob/main/assets/sc/auth.jpg" alt="auth" title="auth" width="200">|
 <img src="https://github.com/mustafasmnc/Amazon_Clone/blob/main/assets/sc/home.jpg" alt="home" title="home" width="200">|
 <img src="https://github.com/mustafasmnc/Amazon_Clone/blob/main/assets/sc/product.jpg" alt="product" title="product" width="200">|
@@ -66,7 +66,7 @@ Then run the following commands to run your app:
 <img src="https://github.com/mustafasmnc/Amazon_Clone/blob/main/assets/sc/cart.jpg" alt="cart" title="cart" width="200">|
 <img src="https://github.com/mustafasmnc/Amazon_Clone/blob/main/assets/sc/order_detail.jpg" alt="order_detail" title="order_detail" width="200">|
 
-# Admin
+## Admin
 <img src="https://github.com/mustafasmnc/Amazon_Clone/blob/main/assets/sc/admin_home.jpg" alt="admin_home" title="admin_home" width="200">|
 <img src="https://github.com/mustafasmnc/Amazon_Clone/blob/main/assets/sc/admin_orders.jpg" alt="admin_orders" title="admin_orders" width="200">|
 <img src="https://github.com/mustafasmnc/Amazon_Clone/blob/main/assets/sc/admin_order_detail.jpg" alt="admin_order_detail" title="admin_order_detail" width="200">|
