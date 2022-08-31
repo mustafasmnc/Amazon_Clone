@@ -1,3 +1,4 @@
+import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatefulWidget {
@@ -32,7 +33,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 });
               },
               icon: Icon(
-                  widget.hintText == 'Password' ? Icons.remove_red_eye : null)),
+                widget.hintText == 'Password' ? Icons.remove_red_eye : null,
+                color:
+                    showPassword ? Colors.grey : GlobalVariables.secondaryColor,
+              )),
           //hintText: hintText,
           labelText: widget.hintText,
           border: OutlineInputBorder(

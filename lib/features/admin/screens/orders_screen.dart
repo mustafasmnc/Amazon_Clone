@@ -48,7 +48,17 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 },
                 child: SizedBox(
                   height: 140,
-                  child: SingleProduct(image: orderData.products[0].images[0]),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SingleProduct(image: orderData.products[0].images[0]),
+                      Text(
+                        orderData.products[0].name,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      )
+                    ],
+                  ),
                 ),
               );
             },
